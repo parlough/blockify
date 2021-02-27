@@ -44,7 +44,7 @@ void main() {
 
 **Generated image:**
 
-![The generated image](example/parlough.png)
+![The generated image](https://github.com/parlough/blockify/blob/main/example/parlough.png)
 
 ## Features and bugs
 
