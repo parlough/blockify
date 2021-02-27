@@ -1,0 +1,52 @@
+name: Dart
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 0 * * *" # Every day at midnight
+env:
+  PUB_ENVIRONMENT: bot.github
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [ dev ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v0.1
+        with:
+          channel: ${{ matrix.sdk }}
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Check formatting
+        if: always() && steps.install.outcome == 'success'
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyze code
+        run: dart analyze
+        if: always() && steps.install.outcome == 'success'
+  test:
+    needs: analyze
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest ]
+        sdk: [ dev ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dart-lang/setup-dart@v0.1
+        with:
+          channel: ${{ matrix.sdk }}
+      - id: install
+        name: Install dependencies
+        run: dart pub get
+      - name: Run VM tests
+        run: dart test --platform vm
+        if: always() && steps.install.outcome == 'success'
