@@ -3,6 +3,12 @@ Generate and configure avatars based off of the hash of any arbitrary string con
 This functionality is inspired by Github's [identicons](https://github.blog/2013-08-14-identicons/) but uses
 a different algorithm so will not result in identical outputs.
 
+**NOTE:** The algorithm of this package may change over time to improve generated image quality, so there is no
+guarantee of stability of generated images between versions. We will consider this a semver break, so if image
+generation changes without any action by the user, we would for example upgrade the version from `0.1.0` -> `0.2.0` or
+`1.0.0` -> `2.0.0`. We are always open to suggestions about how to improve the algorithm and/or image quality so please
+reach out if you have any suggestions!
+
 ## Usage
 
 A simple usage example generating an avatar based off the string `parlough` and storing it as
