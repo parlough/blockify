@@ -30,5 +30,3 @@ jobs:
         run: dart analyze
       - name: Run VM tests
         run: dart test --platform vm
-      - name: Run Chrome tests
-        run: dart test --platform chrome
