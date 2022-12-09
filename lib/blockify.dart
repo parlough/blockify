@@ -8,26 +8,32 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart' show sha512;
 import 'package:image/image.dart';
 
-/// Render a [Image] that is automatically generated based off the SHA-256
-/// of the [content] you specified. As a result, barring any changes in the
-/// algorithm between releases, if you specify the same parameters, the
-/// resulting image will be the same.
+/// Render an [Image] that is automatically generated
+/// based off the SHA-512 of the [content] you specify.
+/// As a result, barring any changes in the algorithm between releases,
+/// if you specify the same parameters,
+/// the resulting image will be the same.
 ///
-/// It will be rendered at a size of [size]*[size] which must be a positive
-/// and even integer. This defaults to a `256x256` image.
+/// It will be rendered at a size of [size]*[size]
+/// which must be a positive and even integer.
+/// This defaults to a `256x256` image.
 ///
-/// It will have the specified [backgroundColor] which should be a 32-bit ARGB
-/// integer. By default, this is white or `0xFFFFFFFF`.
+/// It will have the specified [backgroundColor]
+/// which should be a 32-bit ARGB integer.
+/// By default, this is white or `0xFFFFFFFF`.
 ///
 /// There will be a square of blocks that is [blockAmount]x[blockAmount]
-/// large where each "block" is of equivalent size. This often looks better as
-/// an odd number and defaults to `5` and must be no greater than 8.
+/// large where each "block" is of equivalent size.
+/// This often looks better as an odd number and
+/// defaults to `5` and must be no greater than 8.
 ///
-/// These "blocks" will be a single color either the [primaryColor] you specify
+/// These "blocks" will be a single color:
+/// either the [primaryColor] you specify
 /// or a color generated from the last few bytes of the generated hash.
 ///
-/// You can control the margin outside of the block of "blocks" by specifying
-/// a decimal [margin] which if not in the range of 0-1 will be clamped to fit.
+/// You can control the margin outside of the block of "blocks"
+/// by specifying a decimal [margin]
+/// which if not in the range of 0-1 will be clamped to fit.
 Image render(
     {required final String content,
     final int backgroundColor = 0xFFFFFFFF,
