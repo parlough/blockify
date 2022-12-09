@@ -1,4 +1,4 @@
-## 0.2.0-dev
+## 0.2.0
 
 - Update minimum SDK requirement to Dart 2.17
 - Update dependencies to latest versions
