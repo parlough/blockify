@@ -1,6 +1,8 @@
 name: blockify
-description: Generate and configure avatars based off of the hash of any arbitrary string content.
-version: 0.2.0
+description:
+  Generate and configure avatars based on
+  the hash of any arbitrary string content.
+version: 0.3.0-dev
 repository: https://github.com/parlough/blockify
 
 environment:
