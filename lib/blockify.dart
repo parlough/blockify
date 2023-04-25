@@ -1,7 +1,7 @@
 /// Generate and render an image based off any [String] you specify
 /// with the configurable [render] function
 /// to use as profile pictures, identifiers, or more.
-library blockify;
+library;
 
 import 'dart:convert';
 
@@ -34,13 +34,14 @@ import 'package:image/image.dart';
 /// You can control the margin outside of the block of "blocks"
 /// by specifying a decimal [margin]
 /// which if not in the range of 0-1 will be clamped to fit.
-Image render(
-    {required final String content,
-    final int backgroundColor = 0xFFFFFFFF,
-    int? primaryColor,
-    final int size = 256,
-    final double margin = .12,
-    final int blockAmount = 5}) {
+Image render({
+  required final String content,
+  final int backgroundColor = 0xFFFFFFFF,
+  int? primaryColor,
+  final int size = 256,
+  final double margin = .12,
+  final int blockAmount = 5,
+}) {
   if (blockAmount < 1 || blockAmount > 8) {
     throw RangeError.value(
         blockAmount, 'blockAmount', 'blockAmount must be between 1 and 8.');

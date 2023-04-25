@@ -1,5 +1,8 @@
 ## 0.3.0-dev
 
+- Update minimum SDK requirement to Dart 2.19
+- No longer explicitly name `blockify.dart` library
+
 ## 0.2.0
 
 - Update minimum SDK requirement to Dart 2.17
