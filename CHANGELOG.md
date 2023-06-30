@@ -1,4 +1,4 @@
-## 1.0.0-wip
+## 1.0.0
 
 - Update minimum Dart SDK requirement to Dart 3.0
 - No longer explicitly name `blockify.dart` library
@@ -8,7 +8,7 @@
     resulting in new outputs if no `primaryColor` is specified
   - Require `package:image` 4.0.17 or greater, 
     which includes v4, a complete overhaul of the package
-  - Accept `package:image` `Color` objects instead of integers
+  - Accept `package:image`'s `Color` objects instead of integers
     for `backgroundColor` and `primaryColor`
 
 ## 0.2.0

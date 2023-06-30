@@ -2,7 +2,7 @@ name: blockify
 description: >
   Generate and configure avatars based on
   the hash of any arbitrary string content.
-version: 1.0.0-wip
+version: 1.0.0
 repository: https://github.com/parlough/blockify
 
 environment:
