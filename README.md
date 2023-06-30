@@ -1,7 +1,8 @@
 Generate and configure image avatars
 based off of the hash of any arbitrary string content.
 
-This functionality is inspired by GitHub's [identicons](https://github.blog/2013-08-14-identicons/)
+This functionality is inspired by GitHub's 
+[identicons](https://github.blog/2013-08-14-identicons/),
 but uses a different algorithm so will not result in identical outputs.
 
 > **Note**
@@ -33,27 +34,33 @@ import 'package:image/image.dart';
 void main() {
   const content = 'parlough';
 
-  // Render the image with a transparent background
-  final image = render(content: content, backgroundColor: 0);
+  // Render the image with a transparent background.
+  final image = render(
+    content: content,
+    backgroundColor: ColorRgba8(0, 0, 0, 0),
+  );
 
-  // Encode the image as a PNG image with the `image` package
+  // Encode the image as a PNG image with the `image` package.
   final encoded = encodePng(image);
 
-  // Create a new file with the `dart:io` library
+  // Create a new file with the `dart:io` library.
   final file = File('$content.png');
 
-  // Finally write out the encoded PNG to the newly created file
+  // Finally write out the encoded PNG to the newly created file.
   file.writeAsBytesSync(encoded);
 }
-
 ```
 
 **Generated image:**
 
 ![The generated image](https://github.com/parlough/blockify/blob/main/example/parlough.png)
 
+**Another example:**
+
+![Generated with 'dash' string and Dart colors](https://github.com/parlough/blockify/blob/main/example/dash.png)
+
 ## Features and bugs
 
 Please file feature requests and bugs in the [issue tracker][tracker].
 
-[tracker]: https://github.com/parlough/blockify
+[tracker]: https://github.com/parlough/blockify/issues

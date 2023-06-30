@@ -3,7 +3,8 @@
 /// to use as profile pictures, identifiers, or more.
 library;
 
-import 'dart:convert';
+import 'dart:convert' show utf8;
+import 'dart:math' show max;
 
 import 'package:crypto/crypto.dart' show sha512;
 import 'package:image/image.dart';
@@ -18,9 +19,8 @@ import 'package:image/image.dart';
 /// which must be a positive and even integer.
 /// This defaults to a `256x256` image.
 ///
-/// It will have the specified [backgroundColor]
-/// which should be a 32-bit ARGB integer.
-/// By default, this is white or `0xFFFFFFFF`.
+/// It will have the specified [backgroundColor],
+/// which defaults to white.
 ///
 /// There will be a square of blocks that is [blockAmount]x[blockAmount]
 /// large where each "block" is of equivalent size.
@@ -36,50 +36,77 @@ import 'package:image/image.dart';
 /// which if not in the range of 0-1 will be clamped to fit.
 Image render({
   required final String content,
-  final int backgroundColor = 0xFFFFFFFF,
-  int? primaryColor,
+  Color? backgroundColor,
+  Color? primaryColor,
   final int size = 256,
   final double margin = .12,
   final int blockAmount = 5,
 }) {
   if (blockAmount < 1 || blockAmount > 8) {
     throw RangeError.value(
-        blockAmount, 'blockAmount', 'blockAmount must be between 1 and 8.');
+      blockAmount,
+      'blockAmount',
+      'blockAmount must be between 1 and 8.',
+    );
   }
 
   if (size <= 1) {
-    throw RangeError.value(size, 'size', 'size must be greater than 0.');
+    throw RangeError.value(
+      size,
+      'size',
+      'size must be greater than 0.',
+    );
   }
 
   if (size.isOdd) {
     throw ArgumentError.value(
-        size, 'size', 'The size of the image must be even.');
+      size,
+      'size',
+      'The size of the image must be even.',
+    );
   }
+
+  // Set the default background color to white.
+  backgroundColor ??= ColorUint8.rgba(0xFF, 0xFF, 0xFF, 0xFF);
 
   final data = sha512.convert(utf8.encode(content)).bytes;
 
   if (primaryColor == null) {
     final amount = data.length;
-    var lastTwoWords = 0;
-    for (var i = 0; i < 4; i++) {
-      lastTwoWords += data[amount - i - 1] << (i * 8);
-    }
-    primaryColor = lastTwoWords;
+
+    // Take the last 4 bytes as the default primary color.
+    primaryColor = ColorUint8.rgba(
+      data[amount - 3 - 1],
+      data[amount - 2 - 1],
+      data[amount - 1 - 1],
+      data[amount - 0 - 1],
+    );
   }
 
-  final image = Image(size, size);
+  final maxChannels = max(primaryColor.length, backgroundColor.length);
 
-  fillRect(image, 0, 0, size - 1, size - 1, backgroundColor);
+  final image = Image(
+    width: size,
+    height: size,
+    numChannels: maxChannels,
+    backgroundColor: backgroundColor,
+  );
 
-  margin.clamp(0, 1);
+  image.clear(backgroundColor);
 
-  final marginSize = (size * margin).toInt();
+  final marginSize = (size * margin.clamp(0, 1)).truncate();
   final blockSize = (size - (marginSize * 2)) ~/ blockAmount;
 
-  void drawCellRect(int x, int y, final int color) {
-    x = x * blockSize + marginSize;
-    y = y * blockSize + marginSize;
-    fillRect(image, x, y, x + blockSize - 1, y + blockSize - 1, color);
+  void drawCellRect(int x1, int y1, final Color color) {
+    x1 = x1 * blockSize + marginSize;
+    y1 = y1 * blockSize + marginSize;
+    final x2 = x1 + blockSize - 1;
+    final y2 = y1 + blockSize - 1;
+    for (var x = x1; x <= x2; x++) {
+      for (var y = y1; y <= y2; y++) {
+        image.setPixel(x, y, color);
+      }
+    }
   }
 
   final evenMiddle = blockAmount.isEven;
@@ -87,7 +114,7 @@ Image render({
 
   for (var x = 0; x < columns; x++) {
     for (var y = 0; y < blockAmount; y++) {
-      // Choose to include the block if its byte is odd
+      // Choose to include the block if its byte is odd.
       if (data[x * blockAmount + y].isEven) continue;
 
       drawCellRect(x, y, primaryColor);

@@ -1,7 +1,15 @@
-## 0.3.0-dev
+## 1.0.0-wip
 
-- Update minimum SDK requirement to Dart 2.19
+- Update minimum Dart SDK requirement to Dart 3.0
 - No longer explicitly name `blockify.dart` library
+- Require `package:crypto` 3.0.3 or greater
+- **BREAKING**:
+  - The primary color generation algorithm has changed, 
+    resulting in new outputs if no `primaryColor` is specified
+  - Require `package:image` 4.0.17 or greater, 
+    which includes v4, a complete overhaul of the package
+  - Accept `package:image` `Color` objects instead of integers
+    for `backgroundColor` and `primaryColor`
 
 ## 0.2.0
 

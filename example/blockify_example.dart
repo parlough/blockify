@@ -13,15 +13,18 @@ import 'package:image/image.dart';
 void main() {
   const content = 'parlough';
 
-  // Render the image with a transparent background
-  final image = render(content: content, backgroundColor: 0);
+  // Render the image with a transparent background.
+  final image = render(
+    content: content,
+    backgroundColor: ColorRgba8(0, 0, 0, 0),
+  );
 
-  // Encode the image as a PNG image with the `image` package
+  // Encode the image as a PNG image with the `image` package.
   final encoded = encodePng(image);
 
-  // Create a new file with the `dart:io` library
+  // Create a new file with the `dart:io` library.
   final file = File('$content.png');
 
-  // Finally write out the encoded PNG to the newly created file
+  // Finally write out the encoded PNG to the newly created file.
   file.writeAsBytesSync(encoded);
 }
