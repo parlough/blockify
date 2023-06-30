@@ -6,3 +6,5 @@ pubspec.lock
 build/
 
 doc/api/
+
+.DS_Store
