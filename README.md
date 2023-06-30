@@ -5,7 +5,7 @@ This functionality is inspired by GitHub's
 [identicons](https://github.blog/2013-08-14-identicons/),
 but uses a different algorithm so will not result in identical outputs.
 
-> **Note**
+> **Note**  
 > The algorithm of this package may change over time
 > to improve generated image quality, 
 > so there is no guarantee of stability of generated images between versions. 
